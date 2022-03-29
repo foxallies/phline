@@ -13,4 +13,9 @@ class User extends Model
         'username',
         'password'
     ];
+
+    public function books()
+    {
+        return $this->hasMany(Book::class, 'user_id', 'id');
+    }
 }
