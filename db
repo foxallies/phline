@@ -1,0 +1,45 @@
+#! bin/php
+<?php
+
+use \FOXALLIES\Framework;
+
+require __DIR__ . '/vendor/autoload.php';
+
+(new Framework())->database();
+$classes = [];
+foreach (glob('./database/*.php') as $file) {
+    include $file;
+    $classes[] = [
+        'path' => $file,
+        'class_name' => get_declared_classes()[array_key_last(get_declared_classes())]
+    ];
+}
+
+function resetDatabase($classes)
+{
+    foreach ($classes as $item) {
+        try {
+            $ref = new \ReflectionClass($item['class_name']);
+            $migration = $ref->newInstance();
+            $migration->down();
+        } catch (\ReflectionException $e) {
+            var_dump($e);
+        }
+    }
+}
+
+function buildDatabase($classes)
+{
+    foreach ($classes as $item) {
+        try {
+            $ref = new \ReflectionClass($item['class_name']);
+            $migration = $ref->newInstance();
+            $migration->boot();
+        } catch (\ReflectionException $e) {
+            var_dump($e);
+        }
+    }
+}
+
+resetDatabase($classes);
+buildDatabase($classes);

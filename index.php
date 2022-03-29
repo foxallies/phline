@@ -1,4 +1,7 @@
 <?php
+
+use \FOXALLIES\Framework;
+
 require __DIR__ . '/vendor/autoload.php';
 
-(new \FOXALLIES\Framework())->start();
+(new Framework())->start();
