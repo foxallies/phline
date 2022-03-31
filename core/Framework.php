@@ -5,6 +5,7 @@ namespace FOXALLIES;
 use eftec\bladeone\BladeOne;
 use Illuminate\Container\Container;
 use Illuminate\Events\Dispatcher;
+use League\MimeTypeDetection\FinfoMimeTypeDetector;
 use Routes\ApiRoute;
 use Routes\WebRoute;
 
@@ -56,6 +57,13 @@ class Framework
         // api route
         $router->mount('/api', function () use ($router) {
             (new ApiRoute())->boot($router);
+        });
+        $detector = new FinfoMimeTypeDetector();
+        $router->get('(.*)', function ($path) use ($detector) {
+            if (file_exists("./public/{$path}")) {
+                header('Content-Type: ' . $detector->detectMimeType("./public/{$path}", 'string contents'));
+                require "./public/{$path}";
+            }
         });
         $router->run();
     }
