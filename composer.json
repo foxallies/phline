@@ -17,6 +17,7 @@
   "require": {
     "illuminate/database": "^8.83",
     "illuminate/events": "^8.83",
-    "ext-json": "*"
+    "ext-json": "*",
+    "eftec/bladeone": "^4.5"
   }
 }

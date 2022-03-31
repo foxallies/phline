@@ -2,12 +2,17 @@
 
 namespace App\Controllers;
 
-use App\Models\Book;
 use App\Models\User;
+use FOXALLIES\Controller;
 
-class HomeController
+class HomeController extends Controller
 {
     public function index()
+    {
+        return view('index', ['title' => 'home page !']);
+    }
+
+    public function get_users()
     {
         $users = User::all();
         return [

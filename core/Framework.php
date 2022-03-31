@@ -2,6 +2,7 @@
 
 namespace FOXALLIES;
 
+use eftec\bladeone\BladeOne;
 use Illuminate\Container\Container;
 use Illuminate\Events\Dispatcher;
 use Routes\ApiRoute;
@@ -40,6 +41,13 @@ class Framework
     // configure routes
     private function routes()
     {
+        $views = './views';
+        $cache = './.cache';
+
+        global $blade;
+        $blade = new BladeOne($views, $cache, BladeOne::MODE_AUTO);
+
+        require_once 'core/libs/view.php';
         $router = new Router();
 
         $router->setNamespace('\App\Controllers');
