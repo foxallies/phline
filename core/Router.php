@@ -393,10 +393,11 @@ class Router
 
     private function invoke($fn, $params = array())
     {
-        if ($fn instanceof \Closure) {
-            call_user_func_array($fn, $params);
-        } // If not, check the existence of special parameters
+        if ($fn instanceof \Closure)
+            $return = call_user_func_array($fn, $params);
+        // If not, check the existence of special parameters
         else {
+            $return = null;
             if (is_array($fn))
                 list($controller, $method) = $fn;
             else if (stripos($fn, '@') !== false) {
@@ -414,18 +415,23 @@ class Router
                 // Make sure it's callable
                 if ($reflectedMethod->isPublic() && (!$reflectedMethod->isAbstract())) {
                     if ($reflectedMethod->isStatic()) {
-                        forward_static_call_array(array($controller, $method), $params);
+                        $return = forward_static_call_array(array($controller, $method), $params);
                     } else {
                         // Make sure we have an instance, because a non-static method must not be called statically
                         if (\is_string($controller)) {
                             $controller = new $controller();
                         }
-                        call_user_func_array(array($controller, $method), $params);
+                        $return = call_user_func_array(array($controller, $method), $params);
                     }
                 }
             } catch (\ReflectionException $reflectionException) {
                 // The controller class is not available or the class does not have the method $method
             }
+        }
+
+        if (is_array($return) || is_object($return)) {
+            header('Content-Type: application/json; charset=utf-8');
+            echo json_encode($return);
         }
     }
 
