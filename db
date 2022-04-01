@@ -45,5 +45,13 @@ function buildDatabase($classes)
     }
 }
 
+function seedDatabase()
+{
+    global $framework;
+    include "./database/seeds/DatabaseSeeder.php";
+    (new DatabaseSeeder())->boot($framework->database->getConnection()->getSchemaBuilder());
+}
+
 resetDatabase($classes);
 buildDatabase($classes);
+seedDatabase();
