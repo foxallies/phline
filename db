@@ -8,7 +8,7 @@ global $framework;
 $framework = new Framework();
 $framework->database();
 $classes = [];
-foreach (glob('./database/*.php') as $file) {
+foreach (glob('./database/tables/*.php') as $file) {
     include $file;
     $classes[] = [
         'path' => $file,
