@@ -51,6 +51,7 @@ class Framework
         require_once 'core/libs/view.php';
         $router = new Router();
 
+        $router->setBasePath('/');
         $router->setNamespace('\App\Controllers');
         // web route
         (new WebRoute())->boot($router);
@@ -61,9 +62,11 @@ class Framework
         $detector = new FinfoMimeTypeDetector();
         $router->get('(.*)', function ($path) use ($detector) {
             if (file_exists("./public/{$path}")) {
+                http_response_code(200);
                 header('Content-Type: ' . $detector->detectMimeType("./public/{$path}", 'string contents'));
                 require "./public/{$path}";
-            }
+            } else
+                http_response_code(404);
         });
         $router->run();
     }
