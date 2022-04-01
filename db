@@ -4,8 +4,9 @@
 use \FOXALLIES\Framework;
 
 require __DIR__ . '/vendor/autoload.php';
-
-(new Framework())->database();
+global $framework;
+$framework = new Framework();
+$framework->database();
 $classes = [];
 foreach (glob('./database/*.php') as $file) {
     include $file;
@@ -17,6 +18,8 @@ foreach (glob('./database/*.php') as $file) {
 
 function resetDatabase($classes)
 {
+    global $framework;
+    $framework->database->getConnection()->getSchemaBuilder()->disableForeignKeyConstraints();
     foreach ($classes as $item) {
         try {
             $ref = new \ReflectionClass($item['class_name']);
@@ -26,6 +29,7 @@ function resetDatabase($classes)
             var_dump($e);
         }
     }
+    $framework->database->getConnection()->getSchemaBuilder()->enableForeignKeyConstraints();
 }
 
 function buildDatabase($classes)

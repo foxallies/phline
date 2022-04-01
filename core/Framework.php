@@ -13,6 +13,11 @@ use Illuminate\Database\Capsule\Manager as DatabaseManager;
 
 class Framework
 {
+    /***
+     * @var DatabaseManager $database
+     */
+    public $database;
+
     function __construct()
     {
 
@@ -27,16 +32,16 @@ class Framework
     // configure database
     public function database()
     {
-        $database = new DatabaseManager();
+        $this->database = new DatabaseManager();
         $connections = include './config/databse.php';
 
         foreach ($connections as $name => $connection)
-            $database->addConnection($connection, $name);
+            $this->database->addConnection($connection, $name);
 
-        $database->setEventDispatcher(new Dispatcher(new Container));
+        $this->database->setEventDispatcher(new Dispatcher(new Container));
 
-        $database->setAsGlobal();
-        $database->bootEloquent();
+        $this->database->setAsGlobal();
+        $this->database->bootEloquent();
     }
 
     // configure routes
