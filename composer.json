@@ -19,6 +19,7 @@
     "illuminate/events": "^8.83",
     "ext-json": "*",
     "eftec/bladeone": "^4.5",
-    "league/mime-type-detection": "^1.9"
+    "league/mime-type-detection": "^1.9",
+    "wanfeiyy/dd": "^1.0"
   }
 }
