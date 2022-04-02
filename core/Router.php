@@ -2,7 +2,6 @@
 
 namespace FOXALLIES;
 
-use FOXALLIES\data\route\RouteEventHandler;
 use League\MimeTypeDetection\FinfoMimeTypeDetector;
 use FOXALLIES\Packages\Router\SimpleRouter\SimpleRouter;
 
