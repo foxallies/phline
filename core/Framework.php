@@ -25,8 +25,10 @@ class Framework
 
     public function start()
     {
+        session_start();
         $this->database();
         $this->routes();
+        $this->auth();
     }
 
     // configure database
@@ -47,6 +49,9 @@ class Framework
     // configure routes
     private function routes()
     {
+        global $guard;
+        $guard = 'web';
+
         $views = './views';
         $cache = './.cache';
 
@@ -61,7 +66,8 @@ class Framework
         // web route
         (new WebRoute())->boot($router);
         // api route
-        $router->mount('/api', function () use ($router) {
+        $router->mount('/api', function () use ($router, &$guard) {
+            $guard = 'api';
             (new ApiRoute())->boot($router);
         });
         $detector = new FinfoMimeTypeDetector();
@@ -74,5 +80,10 @@ class Framework
                 http_response_code(404);
         });
         $router->run();
+    }
+
+    private function auth()
+    {
+
     }
 }
