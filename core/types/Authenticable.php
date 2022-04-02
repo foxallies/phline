@@ -7,6 +7,11 @@ use function dd;
 
 trait Authenticable
 {
+    public function roles()
+    {
+        return $this->morphToMany(Role::class, 'model', 'model_has_role');
+    }
+
     public function hasRole($role)
     {
         dd($this);
@@ -30,12 +35,5 @@ trait Authenticable
         $this->roles()->sync($roles, false);
 
         return $this;
-    }
-
-    public function roles()
-    {
-        global $guard;
-        $config = include "./config/auth.php";
-        return $this->morphToMany(Role::class, 'model', 'model_has_role');
     }
 }
