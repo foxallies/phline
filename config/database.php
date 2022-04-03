@@ -3,7 +3,7 @@ return [
     'default' => [
         'driver' => 'mysql',
         'host' => 'localhost',
-        'database' => 'phline',
+        'database' => 'phshop',
         'username' => 'root',
         'password' => '',
         'charset' => 'utf8',

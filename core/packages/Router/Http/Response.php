@@ -128,4 +128,26 @@ class Response
         exit(0);
     }
 
+    /**
+     * @param $content
+     * @return void
+     */
+    public function content($content)
+    {
+        echo html_entity_decode($content);
+        exit(0);
+    }
+
+    /**
+     * blade view
+     * @param $path
+     * @param array $data
+     * @return void
+     */
+    public function view($path, array $data = [])
+    {
+        view($path, $data);
+        exit(0);
+    }
+
 }

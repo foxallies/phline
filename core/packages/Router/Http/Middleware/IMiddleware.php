@@ -8,7 +8,8 @@ interface IMiddleware
 {
     /**
      * @param Request $request
+     * @param $params
      */
-    public function handle(Request $request, ...$parameters): void;
+    public function handle(Request $request, $params): void;
 
 }

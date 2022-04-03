@@ -23,16 +23,24 @@ class Framework
     public function start()
     {
         session_start();
+        $this->config();
         $this->database();
         $this->routes();
         $this->auth();
+    }
+
+    public function config()
+    {
+        $GLOBALS['config']['auth'] = include_once "./config/auth.php";
+        $GLOBALS['config']['database'] = include_once "./config/database.php";
+        require_once './core/libs/config.php';
     }
 
     // configure database
     public function database()
     {
         $this->database = new DatabaseManager();
-        $connections = include './config/databse.php';
+        $connections = config('database');
 
         foreach ($connections as $name => $connection)
             $this->database->addConnection($connection, $name);

@@ -7,6 +7,8 @@ return [
     'api' => [
         'model' => \App\Models\User::class,
         'header' => 'Authorization',
-        'key' => 'token'
+        'key' => 'token',
+        'jwt_secret' => '123456789012',
+        'algorithm' => 'HS256'
     ]
 ];

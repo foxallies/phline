@@ -13,7 +13,7 @@ class Auth
 
     public static function attempt(array $values): bool
     {
-        $config = include "./config/auth.php";
+        $config = config('auth');
         $model = $config['web']['model'];
         $key = $config['web']['key'];
         $data = $model::where($values);
@@ -32,7 +32,7 @@ class Auth
      */
     public static function user()
     {
-        $config = include "./config/auth.php";
+        $config = config('auth');
         $model = $config['web']['model'];
         $key = $config['web']['key'];
         if (is_null(self::$_user)) {
