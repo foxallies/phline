@@ -6,6 +6,7 @@ use \FOXALLIES\Framework;
 require __DIR__ . '/vendor/autoload.php';
 global $framework;
 $framework = new Framework();
+$framework->config();
 $framework->database();
 $classes = [];
 foreach (glob('./database/tables/*.php') as $file) {
